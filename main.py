@@ -6,3 +6,11 @@ This should be a straightforward project.
 3. Store the gained information(probably a semantic value)
 4. Plot the data to see the emotion dynamics, using matplot lib
 """
+
+
+import torch
+
+print(torch.cuda.is_available())
+
+print(torch.__version__)  # Prints the PyTorch version
+print(torch.version.cuda)
