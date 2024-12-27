@@ -2,6 +2,7 @@ from transformers import pipeline
 import torch
 
 
+
 class EmoAssign:
     """Provide a Emotion to the analyzed text."""
     def __init__(self):

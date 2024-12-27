@@ -12,7 +12,7 @@ class SemTagger:
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
 
-    def predict_sentiment(self,text: str):
+    def predict_sentiment(self,text):
         inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512)
         with torch.no_grad():
             outputs = self.model(**inputs)
@@ -21,4 +21,5 @@ class SemTagger:
         return torch.argmax(probabilities, dim=-1).tolist() #[sentiment_map[p] for p in torch.argmax(probabilities, dim=-1).tolist()]
     def clear_cache(self):
         del self.tokenizer
+        del self.model
         torch.cuda.empty_cache()
