@@ -1,13 +1,8 @@
-from functions import speech_path, txt_parser
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 import torch
 
-
-# for text, sentiment in zip(phrase_list[:5], predict_sentiment(phrase_list[:5])):
-#     print(f"Text: {text}\nSentiment: {sentiment}\n")
-
-
-class Umnik:
+class SemTagger:
+    """Provide a Semantic tag to the analysed text"""
     def __init__(self):
         self.model = None
         self.tokenizer = None
@@ -24,15 +19,6 @@ class Umnik:
         probabilities = torch.nn.functional.softmax(outputs.logits, dim=-1)
         sentiment_map = {0: "Very Negative", 1: "Negative", 2: "Neutral", 3: "Positive", 4: "Very Positive"}
         return torch.argmax(probabilities, dim=-1).tolist() #[sentiment_map[p] for p in torch.argmax(probabilities, dim=-1).tolist()]
-class RidlsRofler:
-
-
-
-"""Testing Ground"""
-umnik = Umnik()
-phrase_list = txt_parser(speech_path)
-
-for phrase in phrase_list[:7]:
-    umnik.load_model()
-    prediction = umnik.predict_sentiment(phrase)
-    print(phrase, type(prediction),prediction)
+    def clear_cache(self):
+        del self.tokenizer
+        torch.cuda.empty_cache()

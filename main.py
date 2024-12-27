@@ -14,3 +14,5 @@ print(torch.cuda.is_available())
 
 print(torch.__version__)  # Prints the PyTorch version
 print(torch.version.cuda)
+
+
